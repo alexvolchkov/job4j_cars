@@ -21,6 +21,8 @@
         <mapping class="ru.job4j.hibernate.entity.Car" />
         <mapping class="ru.job4j.hibernate.entity.Driver" />
         <mapping class="ru.job4j.hibernate.entity.Engine" />
+        <mapping class="ru.job4j.hibernate.entity.Advertisement" />
+        <mapping class="ru.job4j.hibernate.entity.Photo" />
 
 
     </session-factory>
