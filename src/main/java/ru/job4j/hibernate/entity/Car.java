@@ -12,24 +12,28 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "engine_id")
     private Engine engine;
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "history_owner", joinColumns = {
-            @JoinColumn(name = "driver_id", nullable = false, updatable = false)},
+            @JoinColumn(name = "car_id", nullable = false, updatable = false)},
             inverseJoinColumns = {
-            @JoinColumn(name = "car_id", nullable = false, updatable = false)})
+            @JoinColumn(name = "driver_id", nullable = false, updatable = false)})
     private Set<Driver> drivers = new HashSet<>();
     @Enumerated(EnumType.STRING)
     private CarBody carBody;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand_id")
+    private CarBrand carBrand;
 
-    public static Car of(String name, Engine engine, Driver driver, CarBody carBody) {
+    public static Car of(String name, Engine engine, Driver driver, CarBody carBody, CarBrand carBrand) {
         Car car = new Car();
         car.name = name;
         car.engine = engine;
         car.drivers.add(driver);
         car.carBody = carBody;
+        car.carBrand = carBrand;
         return car;
     }
 
@@ -73,6 +77,18 @@ public class Car {
         this.carBody = carBody;
     }
 
+    public CarBrand getCarBrand() {
+        return carBrand;
+    }
+
+    public void setCarBrand(CarBrand carBrand) {
+        this.carBrand = carBrand;
+    }
+
+    public void addDriver(Driver driver) {
+        this.drivers.add(driver);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -98,6 +114,7 @@ public class Car {
                 + ", engine=" + engine
                 + ", drivers=" + drivers
                 + ", carBody=" + carBody
+                + ", carBrand=" + carBrand
                 + '}';
     }
 }

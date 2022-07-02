@@ -1,24 +1,20 @@
 package ru.job4j.hibernate.entity;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
-@Table(name = "driver")
-public class Driver {
+@Table(name = "brand")
+public class CarBrand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    @ManyToMany(mappedBy = "drivers")
-    private Set<Car> cars = new HashSet<>();
 
-    public static Driver of(String name) {
-        Driver driver = new Driver();
-        driver.name = name;
-        return driver;
+    public static CarBrand of(String name) {
+        CarBrand carBrand = new CarBrand();
+        carBrand.name = name;
+        return carBrand;
     }
 
     public int getId() {
@@ -37,14 +33,6 @@ public class Driver {
         this.name = name;
     }
 
-    public Set<Car> getCars() {
-        return cars;
-    }
-
-    public void setCars(Set<Car> cars) {
-        this.cars = cars;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -53,18 +41,18 @@ public class Driver {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Driver driver = (Driver) o;
-        return id == driver.id && Objects.equals(name, driver.name);
+        CarBrand carBrand = (CarBrand) o;
+        return id == carBrand.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
-        return "Driver{"
+        return "CarBrand{"
                 + "id=" + id
                 + ", name='" + name + '\''
                 + '}';

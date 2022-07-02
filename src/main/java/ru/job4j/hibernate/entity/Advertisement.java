@@ -1,6 +1,7 @@
 package ru.job4j.hibernate.entity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
@@ -11,19 +12,24 @@ public class Advertisement {
     private int id;
     private String name;
     private String description;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id")
     private Car car;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "ad_id")
     private final List<Photo> photo = new ArrayList<>();
     private boolean sold;
+    private LocalDateTime created = LocalDateTime.now();
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id")
+    private Author author;
 
-    public static Advertisement of(String name, String description, Car car) {
+    public static Advertisement of(String name, String description, Car car, Author author) {
         Advertisement ad = new Advertisement();
         ad.name = name;
         ad.description = description;
         ad.car = car;
+        ad.author = author;
         return ad;
     }
 
@@ -71,6 +77,22 @@ public class Advertisement {
         this.sold = sold;
     }
 
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -94,9 +116,10 @@ public class Advertisement {
                 + "id=" + id
                 + ", name='" + name + '\''
                 + ", description='" + description + '\''
-                + ", car=" + car
-                + ", photo=" + photo
+                + ", carBrand=" + car.getCarBrand().getName()
+                + ", carBody=" + car.getCarBody()
                 + ", sold=" + sold
+                + ", author=" + author
                 + '}';
     }
 }

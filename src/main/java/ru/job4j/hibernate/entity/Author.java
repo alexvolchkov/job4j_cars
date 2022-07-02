@@ -1,24 +1,24 @@
 package ru.job4j.hibernate.entity;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
-@Table(name = "driver")
-public class Driver {
+@Table(name = "author")
+public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
-    @ManyToMany(mappedBy = "drivers")
-    private Set<Car> cars = new HashSet<>();
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public static Driver of(String name) {
-        Driver driver = new Driver();
-        driver.name = name;
-        return driver;
+    public static Author of(String name, User user) {
+        Author author = new Author();
+        author.name = name;
+        author.user = user;
+        return author;
     }
 
     public int getId() {
@@ -37,12 +37,12 @@ public class Driver {
         this.name = name;
     }
 
-    public Set<Car> getCars() {
-        return cars;
+    public User getUser() {
+        return user;
     }
 
-    public void setCars(Set<Car> cars) {
-        this.cars = cars;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -53,20 +53,21 @@ public class Driver {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Driver driver = (Driver) o;
-        return id == driver.id && Objects.equals(name, driver.name);
+        Author author = (Author) o;
+        return id == author.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
-        return "Driver{"
+        return "Author{"
                 + "id=" + id
                 + ", name='" + name + '\''
+                + ", user=" + user
                 + '}';
     }
 }
