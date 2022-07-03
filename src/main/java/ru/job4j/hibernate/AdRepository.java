@@ -18,7 +18,7 @@ public class AdRepository {
                                         + "left join fetch ad.photo p "
                                         + "where ad.created between :dateFrom and :dateTo"
                         ).setParameter("dateFrom", LocalDateTime.now().minusDays(1).with(LocalTime.MIN))
-                        .setParameter("dateTo", LocalDateTime.now().minusDays(1).with(LocalTime.MAX))
+                        .setParameter("dateTo", LocalDateTime.now())
                         .list(),
                 sf);
     }
