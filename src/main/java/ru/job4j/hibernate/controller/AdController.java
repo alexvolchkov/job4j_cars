@@ -37,7 +37,7 @@ public class AdController {
         return "index";
     }
 
-    @GetMapping("/formAddAd")//+
+    @GetMapping("/formAddAd")
     public String formAddAd(Model model, HttpSession session) {
         model.addAttribute("ads", new Advertisement());
         model.addAttribute("carBrands", carBrandService.findAll());
