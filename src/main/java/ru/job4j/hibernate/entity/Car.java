@@ -37,6 +37,15 @@ public class Car {
         return car;
     }
 
+    public static Car of(String name, Engine engine, CarBody carBody, CarBrand carBrand) {
+        Car car = new Car();
+        car.name = name;
+        car.engine = engine;
+        car.carBody = carBody;
+        car.carBrand = carBrand;
+        return car;
+    }
+
     public int getId() {
         return id;
     }

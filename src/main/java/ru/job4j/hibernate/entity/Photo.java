@@ -10,10 +10,14 @@ public class Photo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private byte[] photo;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "ad_id")
+    private Advertisement advertisement;
 
-    public static Photo of(byte[] photo) {
+    public static Photo of(byte[] photo, Advertisement advertisement) {
         Photo rsl = new Photo();
         rsl.photo = photo;
+        rsl.advertisement = advertisement;
         return rsl;
     }
 

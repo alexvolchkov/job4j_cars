@@ -23,7 +23,6 @@
         <mapping class="ru.job4j.hibernate.entity.Engine" />
         <mapping class="ru.job4j.hibernate.entity.Advertisement" />
         <mapping class="ru.job4j.hibernate.entity.Photo" />
-        <mapping class="ru.job4j.hibernate.entity.Author" />
         <mapping class="ru.job4j.hibernate.entity.CarBrand" />
         <mapping class="ru.job4j.hibernate.entity.User" />
 

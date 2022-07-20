@@ -15,21 +15,20 @@ public class Advertisement {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id")
     private Car car;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "ad_id")
+    @OneToMany(mappedBy = "advertisement")
     private final List<Photo> photo = new ArrayList<>();
     private boolean sold;
     private LocalDateTime created = LocalDateTime.now();
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id")
-    private Author author;
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public static Advertisement of(String name, String description, Car car, Author author) {
+    public static Advertisement of(String name, String description, Car car, User user) {
         Advertisement ad = new Advertisement();
         ad.name = name;
         ad.description = description;
         ad.car = car;
-        ad.author = author;
+        ad.user = user;
         return ad;
     }
 
@@ -85,12 +84,16 @@ public class Advertisement {
         this.created = created;
     }
 
-    public Author getAuthor() {
-        return author;
+    public User getUser() {
+        return user;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void addPhoto(Photo photo) {
+        this.photo.add(photo);
     }
 
     @Override
@@ -119,7 +122,7 @@ public class Advertisement {
                 + ", carBrand=" + car.getCarBrand().getName()
                 + ", carBody=" + car.getCarBody()
                 + ", sold=" + sold
-                + ", author=" + author
+                + ", author=" + user.getName()
                 + '}';
     }
 }
